@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-export default function RegisterForm({ onStart }) {
+export default function RegisterForm({ onStart })
+{
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = () =>
+  {
     if (!name.trim()) return setError("Please enter your full name.");
     if (!email.trim() || !email.includes("@")) return setError("Please enter a valid email address.");
     setError("");
@@ -49,7 +51,7 @@ export default function RegisterForm({ onStart }) {
         </div>
 
         <button onClick={handleSubmit}
-          className="w-full bg-yellow-500 text-black py-3 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-yellow-400 transition-all shadow-lg shadow-yellow-500/20">
+          className="w-full bg-[#d6b25e] text-black py-3 rounded-xl font-black uppercase tracking-widest text-xs hover:bg-yellow-400 transition-all">
           Begin test
         </button>
       </div>
