@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { MIN_WPM } from "../hooks/useTypingTest";
 
-const API = import.meta.env.VITE_API_URL || "";
+const API = import.meta.env.VITE_API_URL;
 
 export default function ResultCard({ result, user, onRetake })
 {
@@ -13,16 +13,29 @@ export default function ResultCard({ result, user, onRetake })
   const handleSubmit = async () =>
   {
     setStatus("loading");
+
     try
     {
       await axios.post(`${API}/api/results/submit`, {
-        name: user.name, email: user.email,
-        wpm, accuracy, correctWords, errors, wordsTyped, passed, passageUsed,
+        name: user.name,
+        email: user.email,
+        wpm,
+        accuracy,
+        correctWords,
+        errors,
+        wordsTyped,
+        passed,
+        passageUsed,
       });
+
       setStatus("success");
     } catch (err)
     {
-      setErrMsg(err.response?.data?.message || "Submission failed. Please try again.");
+      console.error(err); // 🔴 add this for debugging
+
+      setErrMsg(
+        err.response?.data?.message || "Submission failed. Please try again."
+      );
       setStatus("error");
     }
   };
@@ -50,7 +63,7 @@ export default function ResultCard({ result, user, onRetake })
         </div>
 
         <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold mb-6 ${passed ? "bg-green-500/10 text-green-400 border border-green-500/20"
-            : "bg-red-500/10 text-red-400 border border-red-500/20"}`}>
+          : "bg-red-500/10 text-red-400 border border-red-500/20"}`}>
           {passed ? `Passed — ${wpm} WPM (min. ${MIN_WPM})` : `Below ${MIN_WPM} WPM — consider retaking`}
         </div>
 
