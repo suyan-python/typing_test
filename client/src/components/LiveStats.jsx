@@ -1,4 +1,5 @@
-export default function LiveStats({ typed, passage, timeLeft, duration }) {
+export default function LiveStats({ typed, passage, timeLeft, duration })
+{
   const elapsed = duration - timeLeft;
   const typedWords = typed.trim().split(/\s+/).filter(Boolean);
   const wpm = elapsed > 0 ? Math.round((typedWords.length / elapsed) * 60) : 0;
@@ -13,7 +14,7 @@ export default function LiveStats({ typed, passage, timeLeft, duration }) {
       {[{ val: wpm, label: "WPM" }, { val: acc !== null ? acc + "%" : "—", label: "Accuracy" }].map(({ val, label }) => (
         <div key={label} className="text-right">
           <div className="text-2xl font-bold text-white">{val}</div>
-          <div className="text-[10px] text-gray-600 uppercase tracking-widest">{label}</div>
+          <div className="text-[10px] text-gray-200 uppercase tracking-widest">{label}</div>
         </div>
       ))}
     </div>

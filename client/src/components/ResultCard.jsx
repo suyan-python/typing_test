@@ -75,7 +75,7 @@ export default function ResultCard({ result, user, onRetake })
             </div>
           ) : (
             <>
-              <p className="text-gray-400 text-sm mb-4">
+              <p className="text-gray-300 text-sm mb-4">
                 {passed ? "Great score! Submit your result to our HR team." : "You can retake for a better result, or submit your current score."}
               </p>
               {status === "error" && <p className="text-red-400 text-xs mb-3">{errMsg}</p>}

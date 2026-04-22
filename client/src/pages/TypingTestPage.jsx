@@ -39,6 +39,7 @@ export default function TypingTestPage()
     }
   }, [phase]);
 
+
   return (
     <div className="min-h-screen bg-[#0b0e14] flex flex-col">
 
@@ -69,6 +70,27 @@ export default function TypingTestPage()
               exit={{ opacity: 0, y: -16 }}
             >
               <RegisterForm onStart={handleStart} />
+
+              {/* 👇 Guest Access */}
+              <div className="mt-6 text-center">
+                <p className="text-gray-600 text-xs mb-3 uppercase tracking-widest">
+                  Or
+                </p>
+
+                <button
+                  onClick={() =>
+                    handleStart({
+                      name: "Guest User",
+                      email: "guest@evolvevue.com"
+                    })
+                  }
+                  className="w-full border border-white/10 text-gray-300 py-3 rounded-xl 
+                   text-xs font-bold uppercase tracking-widest
+                   hover:border-white/20 hover:text-white transition-all"
+                >
+                  Continue as Guest
+                </button>
+              </div>
             </motion.div>
           )}
 
@@ -114,7 +136,7 @@ export default function TypingTestPage()
                   onKeyDown={(e) => e.key === "Tab" && e.preventDefault()}
                   onPaste={(e) => e.preventDefault()}
                   placeholder="Start typing here..."
-                  className="w-full mt-4 bg-[#12171f] border border-white/10 rounded-xl px-4 py-3 text-white font-mono text-sm outline-none focus:border-yellow-500/30 transition-colors resize-none placeholder:text-gray-700"
+                  className="w-full mt-4 bg-white border border-white/10 rounded-xl px-4 py-3 text-gray-900 font-mono text-sm outline-none focus:border-yellow-500/30 transition-colors resize-none placeholder:text-gray-700"
                 />
 
                 <div className="mt-4 flex gap-3">
