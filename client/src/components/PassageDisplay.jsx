@@ -14,7 +14,7 @@ export default function PassageDisplay({ passage, typed })
     if (cursor)
     {
       cursor.scrollIntoView({
-        block: "nearest",
+        block: "center",
         inline: "nearest",
         behavior: "smooth", // 🔥 smoother feel
       });
@@ -54,8 +54,8 @@ export default function PassageDisplay({ passage, typed })
                 <span
                   key={ci}
                   className={`${cls} ${isCursorHere
-                      ? "is-cursor border-l-2 border-yellow-400 animate-pulse"
-                      : ""
+                    ? "is-cursor border-l-2 border-yellow-400 animate-pulse transition-all duration-200"
+                    : ""
                     }`}
                 >
                   {char}
@@ -79,7 +79,7 @@ export default function PassageDisplay({ passage, typed })
               <span
                 className={
                   isCurrent && tw.length === word.length
-                    ? "is-cursor border-l-2 border-yellow-400 animate-pulse"
+                    ? "is-cursor border-l-2 border-yellow-400 animate-pulse transition-all duration-200"
                     : "text-gray-600"
                 }
               >

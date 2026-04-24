@@ -136,7 +136,7 @@ export default function TypingTestPage()
                   onKeyDown={(e) => e.key === "Tab" && e.preventDefault()}
                   onPaste={(e) => e.preventDefault()}
                   placeholder="Start typing here..."
-                  className="w-full mt-4 bg-white border border-white/10 rounded-xl px-4 py-3 text-gray-900 font-mono text-sm outline-none focus:border-yellow-500/30 transition-colors resize-none placeholder:text-gray-700"
+                  className="w-full mt-4 bg-white border border-white/10 rounded-xl px-4 py-3 text-gray-900 font-mono text-sm outline-none focus:border-yellow-500/30 transition-all resize-none placeholder:text-gray-700"
                 />
 
                 <div className="mt-4 flex gap-3">
