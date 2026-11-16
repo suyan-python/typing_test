@@ -7,8 +7,7 @@ import LiveStats from "../components/LiveStats";
 import ResultCard from "../components/ResultCard";
 import { useTypingTest } from "../hooks/useTypingTest";
 
-export default function TypingTestPage()
-{
+export default function TypingTestPage() {
   const [user, setUser] = useState(null);
   const inputRef = useRef(null);
 
@@ -22,44 +21,25 @@ export default function TypingTestPage()
     beginTest,
     forceEnd,
     reset,
-    DURATION
+    DURATION,
   } = useTypingTest();
 
-  const handleStart = (userData) =>
-  {
+  const handleStart = (userData) => {
     setUser(userData);
     beginTest();
   };
 
-  useEffect(() =>
-  {
-    if (phase === "test")
-    {
+  useEffect(() => {
+    if (phase === "test") {
       setTimeout(() => inputRef.current?.focus(), 100);
     }
   }, [phase]);
 
-
   return (
-    <div className="min-h-screen bg-[#0b0e14] flex flex-col">
-
-      {/* HEADER */}
-      <header className="border-b border-white/5 px-6 md:px-12 h-16 flex items-center justify-between flex-shrink-0">
-        <div className="flex items-center gap-3">
-          <div className="w-2 h-2 bg-yellow-500 rounded-full" />
-          <span className="text-[10px] font-black text-white uppercase tracking-[0.3em]">
-            Evolve Vue
-          </span>
-        </div>
-        <span className="text-[10px] text-gray-700 uppercase tracking-widest hidden md:block">
-          Typing Assessment Portal
-        </span>
-      </header>
-
+    <div className="min-h-screen  flex flex-col">
       {/* MAIN */}
       <main className="flex-1 flex items-center justify-center px-4 py-12">
         <AnimatePresence mode="wait">
-
           {/* REGISTER */}
           {phase === "register" && (
             <motion.div
@@ -81,12 +61,12 @@ export default function TypingTestPage()
                   onClick={() =>
                     handleStart({
                       name: "Guest User",
-                      email: "guest@evolvevue.com"
+                      email: "guest@evolvevue.com",
                     })
                   }
-                  className="w-full border border-white/10 text-gray-300 py-3 rounded-xl 
+                  className="w-full border border-black/50 text-gray-700 py-3 rounded-xl 
                    text-xs font-bold uppercase tracking-widest
-                   hover:border-white/20 hover:text-white transition-all"
+                   hover:border-black/20 hover:text-black transition-all"
                 >
                   Continue as Guest
                 </button>
@@ -103,55 +83,86 @@ export default function TypingTestPage()
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
             >
+              {/* Heading */}
               <div className="text-center mb-8">
-                <h1 className="text-2xl font-bold text-white mb-1">
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">
                   Type the passage below
                 </h1>
-                <p className="text-gray-500 text-sm">
-                  {user?.name}
-                </p>
+
+                <p className="text-gray-500 text-sm">Welcome, {user?.name}</p>
               </div>
 
-              <div className="bg-[#0e121a] border border-white/5 rounded-2xl p-8">
-
-                <div className="flex items-start justify-between gap-6">
-                  <div className="flex-1">
+              {/* Test Card */}
+              <div className="bg-white border border-gray-200 rounded-2xl p-5 sm:p-8 shadow-sm">
+                {/* Timer & Live Stats */}
+                <div className="flex items-start justify-between gap-5 mb-7">
+                  <div className="flex-1 min-w-0">
                     <TimerBar timeLeft={timeLeft} duration={DURATION} />
                   </div>
-                  <LiveStats
-                    typed={typed}
-                    passage={passage}
-                    timeLeft={timeLeft}
-                    duration={DURATION}
+                  {/* 
+                  <div className="shrink-0">
+                    <LiveStats
+                      typed={typed}
+                      passage={passage}
+                      timeLeft={timeLeft}
+                      duration={DURATION}
+                    />
+                  </div> */}
+                </div>
+
+                {/* Passage */}
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 sm:p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                      Typing passage
+                    </span>
+
+                    <span className="text-[10px] font-medium text-gray-400">
+                      Read carefully
+                    </span>
+                  </div>
+
+                  <PassageDisplay passage={passage} typed={typed} />
+                </div>
+
+                {/* Typing Area */}
+                <div className="mt-5">
+                  <textarea
+                    ref={inputRef}
+                    rows={4}
+                    value={typed}
+                    onChange={(e) => handleTyping(e.target.value)}
+                    onKeyDown={(e) => e.key === "Tab" && e.preventDefault()}
+                    onPaste={(e) => e.preventDefault()}
+                    placeholder="Start typing here..."
+                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-4
+          text-gray-900 text-sm leading-relaxed outline-none
+          focus:border-[#d6b25e] focus:ring-2 focus:ring-[#d6b25e]/20
+          transition-all duration-200 resize-none
+          placeholder:text-gray-500 tracking-wide"
                   />
                 </div>
 
-                <PassageDisplay passage={passage} typed={typed} />
-
-                <textarea
-                  ref={inputRef}
-                  rows={3}
-                  value={typed}
-                  onChange={(e) => handleTyping(e.target.value)}
-                  onKeyDown={(e) => e.key === "Tab" && e.preventDefault()}
-                  onPaste={(e) => e.preventDefault()}
-                  placeholder="Start typing here..."
-                  className="w-full mt-4 bg-white border border-white/10 rounded-xl px-4 py-3 text-gray-900 font-mono text-sm outline-none focus:border-yellow-500/30 transition-all resize-none placeholder:text-gray-700"
-                />
-
-                <div className="mt-4 flex gap-3">
+                {/* Actions */}
+                <div className="mt-6 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3">
                   <button
                     onClick={() => reset(true)}
-                    className="border border-red-500/20 text-red-400 px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-red-500/10 transition-all"
+                    className="border border-red-200 text-red-600 px-5 py-3
+          rounded-xl text-xs font-bold uppercase tracking-wider
+          hover:bg-red-50 hover:border-red-300
+          transition-all duration-200"
                   >
                     Restart Test
                   </button>
 
                   <button
                     onClick={forceEnd}
-                    className="border border-white/10 text-gray-400 px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-widest hover:border-white/20 transition-all"
+                    className="bg-[#d6b25e] text-gray-900 px-6 py-3
+          rounded-xl text-xs font-bold uppercase tracking-wider
+          hover:bg-[#c9a34c] hover:shadow-md
+          active:scale-[0.99] transition-all duration-200"
                   >
-                    Submit early
+                    Submit Early
                   </button>
                 </div>
               </div>
@@ -170,18 +181,17 @@ export default function TypingTestPage()
               <ResultCard
                 result={result}
                 user={user}
-                onRetake={() => reset(true)}   // 🔥 THIS IS KEY
+                onRetake={() => reset(true)} // 🔥 THIS IS KEY
               />
             </motion.div>
           )}
-
         </AnimatePresence>
       </main>
 
       {/* FOOTER */}
       <footer className="border-t border-white/5 py-4 text-center flex-shrink-0">
-        <p className="text-gray-700 text-[10px] uppercase tracking-widest">
-          typingtest.evolvevue.com.np — Evolve Vue Pvt. Ltd.
+        <p className="text-gray-700 text-[10px] font-semibold tracking-wide">
+          TypingTest — Vu Devi Services / Evolve Vue Pvt. Ltd.
         </p>
       </footer>
     </div>
